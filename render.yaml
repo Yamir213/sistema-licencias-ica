@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: licencias-ica
+    runtime: python
+    plan: free
+    buildCommand: |
+      pip install --upgrade pip
+      pip install -r requirements.txt
+    startCommand: gunicorn -w 4 -k uvicorn.workers.UvicornWorker app.main:app
+    envVars:
+      - key: DATABASE_URL
+        value: sqlite:///./data/licencias_ica.db
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ALGORITHM
+        value: HS256
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: 60
+      - key: APP_URL
+        value: https://licencias-ica.onrender.com
+      - key: PYTHON_VERSION
+        value: 3.11.0
