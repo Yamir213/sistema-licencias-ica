@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="es-PE">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Solicitudes - Municipalidad de Ica</title>
+    <style>
+        :root {
+            --primary: #0B3B5C;
+            --primary-light: #1E4F72;
+            --secondary: #8B1E3F;
+            --dark: #1C2B3A;
+            --gray-dark: #4A5568;
+            --gray: #718096;
+            --gray-light: #E2E8F0;
+            --light: #F7FAFC;
+            --white: #FFFFFF;
+            --success: #047857;
+            --warning: #B45309;
+            --border-radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--light);
+            color: var(--dark);
+        }
+
+        .header {
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-light);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 16px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .logo-text {
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .logo-text span {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .user-badge {
+            background: var(--secondary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+        }
+
+        .user-name {
+            font-weight: 500;
+            color: var(--gray-dark);
+        }
+
+        .btn-outline {
+            padding: 8px 16px;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            color: var(--gray-dark);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .btn-outline:hover {
+            background: var(--light);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 40px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: 500;
+        }
+
+        .filters {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--gray-dark);
+            font-size: 0.9rem;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            background: var(--white);
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+        }
+
+        .btn-primary {
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-light);
+        }
+
+        .btn-secondary {
+            padding: 10px 20px;
+            background: var(--light);
+            border: 1px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            color: var(--gray-dark);
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .btn-secondary:hover {
+            background: var(--gray-light);
+        }
+
+        .table-container {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px 10px;
+            color: var(--gray);
+            font-weight: 500;
+            font-size: 0.85rem;
+            border-bottom: 2px solid var(--gray-light);
+        }
+
+        td {
+            padding: 15px 10px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .estado-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .estado-pendiente_pago {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .estado-pagado {
+            background: #DEF7EC;
+            color: #03543F;
+        }
+
+        .estado-requiere_itse {
+            background: #E1EFFE;
+            color: #1E429F;
+        }
+
+        .estado-licencia_emitida {
+            background: #DEF7EC;
+            color: #03543F;
+        }
+
+        .btn-action {
+            padding: 6px 16px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            margin-right: 8px;
+            display: inline-block;
+        }
+
+        .btn-action:hover {
+            background: var(--primary-light);
+        }
+
+        .btn-success {
+            background: var(--success);
+        }
+
+        .btn-success:hover {
+            background: #065F46;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .pagination a {
+            padding: 8px 16px;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            color: var(--gray-dark);
+        }
+
+        .pagination a.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .summary-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            color: var(--gray);
+        }
+
+        @media (max-width: 768px) {
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+            .filter-actions {
+                grid-column: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">MPI</div>
+                <div class="logo-text">
+                    Municipalidad de Ica
+                    <span>Gestión de Solicitudes</span>
+                </div>
+            </div>
+            <div class="user-menu">
+                <span class="user-badge">FUNCIONARIO</span>
+                <span class="user-name">{{ user.nombre }}</span>
+                <a href="/municipal/dashboard" class="btn-outline">Dashboard</a>
+                <a href="/municipal/logout" class="btn-outline">Salir</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="page-header">
+            <h1>Gestión de solicitudes</h1>
+            <div>
+                <a href="/municipal/solicitudes/exportar" class="btn-outline" style="padding: 12px 24px; margin-right: 10px;">📥 Exportar</a>
+                <a href="/municipal/solicitudes" class="btn-primary" style="padding: 12px 24px; text-decoration: none;">Actualizar lista</a>
+            </div>
+        </div>
+
+        <!-- Filtros -->
+        <div class="filters">
+            <form method="get" action="/municipal/solicitudes" id="filtrosForm">
+                <div class="filters-grid">
+                    <div class="filter-group">
+                        <label>Estado</label>
+                        <select name="estado" onchange="this.form.submit()">
+                            <option value="">Todos</option>
+                            <option value="pendiente_pago" {% if request.query_params.estado == 'pendiente_pago' %}selected{% endif %}>Pendiente de pago</option>
+                            <option value="pagado" {% if request.query_params.estado == 'pagado' %}selected{% endif %}>Pagado</option>
+                            <option value="requiere_itse" {% if request.query_params.estado == 'requiere_itse' %}selected{% endif %}>Requiere ITSE</option>
+                            <option value="licencia_emitida" {% if request.query_params.estado == 'licencia_emitida' %}selected{% endif %}>Licencia emitida</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Nivel de riesgo</label>
+                        <select name="riesgo" onchange="this.form.submit()">
+                            <option value="">Todos</option>
+                            <option value="bajo" {% if request.query_params.riesgo == 'bajo' %}selected{% endif %}>Bajo</option>
+                            <option value="medio" {% if request.query_params.riesgo == 'medio' %}selected{% endif %}>Medio</option>
+                            <option value="alto" {% if request.query_params.riesgo == 'alto' %}selected{% endif %}>Alto</option>
+                            <option value="muy_alto" {% if request.query_params.riesgo == 'muy_alto' %}selected{% endif %}>Muy alto</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Distrito</label>
+                        <select name="distrito" onchange="this.form.submit()">
+                            <option value="">Todos</option>
+                            <option value="Ica">Ica</option>
+                            <option value="Parcona">Parcona</option>
+                            <option value="La Tinguiña">La Tinguiña</option>
+                            <option value="Los Aquijes">Los Aquijes</option>
+                            <option value="Subtanjalla">Subtanjalla</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Búsqueda</label>
+                        <input type="text" name="buscar" placeholder="N° expediente, negocio..." value="{{ request.query_params.buscar }}">
+                    </div>
+                    <div class="filter-actions">
+                        <button type="submit" class="btn-primary">Aplicar filtros</button>
+                        <a href="/municipal/solicitudes" class="btn-secondary">Limpiar</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Resumen -->
+        <div class="summary-bar">
+            <span>Mostrando {{ solicitudes|length }} solicitudes</span>
+            <span>Total registros: {{ total_solicitudes }}</span>
+        </div>
+
+        <!-- Tabla de solicitudes -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Expediente</th>
+                        <th>Fecha</th>
+                        <th>Solicitante</th>
+                        <th>Negocio</th>
+                        <th>Rubro</th>
+                        <th>Riesgo</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for solicitud in solicitudes %}
+                    <tr>
+                        <td><strong>{{ solicitud.numero_expediente }}</strong></td>
+                        <td>{{ solicitud.created_at.strftime('%d/%m/%Y') }}</td>
+                        <td>{{ solicitud.usuario.nombre_completo() }}</td>
+                        <td>{{ solicitud.nombre_negocio }}</td>
+                        <td>{{ solicitud.rubro.nombre }}</td>
+                        <td>
+                            <span style="
+                                padding: 2px 8px;
+                                border-radius: 40px;
+                                font-size: 0.7rem;
+                                font-weight: 600;
+                                {% if solicitud.nivel_riesgo == 'bajo' %}background: #DEF7EC; color: #03543F;
+                                {% elif solicitud.nivel_riesgo == 'medio' %}background: #FEF3C7; color: #92400E;
+                                {% else %}background: #FDE8E8; color: #9B1C1C;
+                                {% endif %}
+                            ">
+                                {{ solicitud.nivel_riesgo|upper }}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="estado-badge estado-{{ solicitud.estado }}">
+                                {% if solicitud.estado == 'pendiente_pago' %}Pendiente pago
+                                {% elif solicitud.estado == 'pagado' %}Pagado
+                                {% elif solicitud.estado == 'requiere_itse' %}Requiere ITSE
+                                {% elif solicitud.estado == 'licencia_emitida' %}Licencia emitida
+                                {% else %}{{ solicitud.estado }}
+                                {% endif %}
+                            </span>
+                        </td>
+                        <td>
+                            <a href="/municipal/solicitud/{{ solicitud.id }}" class="btn-action">Ver</a>
+                            {% if solicitud.estado == 'pagado' and not solicitud.requiere_itse_previa %}
+                            <a href="/municipal/solicitud/{{ solicitud.id }}/emitir" class="btn-action btn-success" onclick="return confirm('¿Está seguro de emitir esta licencia?')">Emitir</a>
+                            {% endif %}
+                            {% if solicitud.estado == 'pagado' and solicitud.requiere_itse_previa %}
+                            <a href="/municipal/inspecciones/programar/{{ solicitud.id }}" class="btn-action">Programar ITSE</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Paginación -->
+        {% if paginas > 1 %}
+        <div class="pagination">
+            <a href="?page=1">&laquo;</a>
+            {% for p in range(1, paginas + 1) %}
+                {% if p == pagina_actual %}
+                <a href="?page={{ p }}" class="active">{{ p }}</a>
+                {% else %}
+                <a href="?page={{ p }}">{{ p }}</a>
+                {% endif %}
+            {% endfor %}
+            <a href="?page={{ paginas }}">&raquo;</a>
+        </div>
+        {% endif %}
+    </main>
+</body>
+</html>

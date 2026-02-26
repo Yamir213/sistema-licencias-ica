@@ -1,0 +1,1445 @@
+<!DOCTYPE html>
+<html lang="es-PE">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Municipalidad Provincial de Ica - Licencias de Funcionamiento</title>
+    <meta name="description" content="Plataforma oficial para el trámite de licencias de funcionamiento de la Municipalidad Provincial de Ica. Realice su trámite 100% en línea.">
+    <style>
+        /* ===== VARIABLES INSTITUCIONALES ===== */
+        :root {
+            --primary: #0B3B5C;      /* Azul marino institucional */
+            --primary-light: #1E4F72;
+            --secondary: #8B1E3F;     /* Vino tinto (colores históricos de Ica) */
+            --accent: #C49A6C;         /* Dorado suave */
+            --dark: #1C2B3A;
+            --gray-dark: #4A5568;
+            --gray: #718096;
+            --gray-light: #E2E8F0;
+            --light: #F7FAFC;
+            --white: #FFFFFF;
+            --shadow: 0 4px 20px rgba(0,0,0,0.05);
+            --shadow-hover: 0 8px 30px rgba(11,59,92,0.12);
+            --border-radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            color: var(--dark);
+            line-height: 1.6;
+            background: var(--white);
+        }
+
+        /* ===== TIPOGRAFÍA SOBRIA ===== */
+        h1, h2, h3, h4 {
+            font-weight: 500;
+            line-height: 1.3;
+            color: var(--dark);
+        }
+
+        h1 {
+            font-size: clamp(2.2rem, 5vw, 3.2rem);
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 500;
+            letter-spacing: -0.01em;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            font-weight: 500;
+        }
+
+        p {
+            color: var(--gray-dark);
+            font-size: 1.1rem;
+        }
+
+        /* ===== UTILITARIOS ===== */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+            letter-spacing: 0.3px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 2px 8px rgba(11,59,92,0.2);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-light);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(11,59,92,0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .section-title {
+            margin-bottom: 48px;
+        }
+
+        .section-title h2 {
+            margin-bottom: 16px;
+            position: relative;
+            padding-bottom: 16px;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--secondary);
+        }
+
+        .section-title p {
+            color: var(--gray);
+            font-size: 1.1rem;
+            max-width: 700px;
+        }
+
+        /* ===== HEADER INSTITUCIONAL ===== */
+        .header {
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-light);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 20px;
+        }
+
+        .logo-text {
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: var(--dark);
+            line-height: 1.3;
+        }
+
+        .logo-text span {
+            display: block;
+            font-weight: 400;
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--gray-dark);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .nav-actions .btn {
+            padding: 10px 24px;
+            font-size: 0.9rem;
+        }
+
+        /* ===== HERO INSTITUCIONAL ===== */
+        .hero {
+            padding: 80px 0;
+            background: linear-gradient(to bottom, var(--light), var(--white));
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-text .subtitle {
+            color: var(--secondary);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+        }
+
+        .hero-text h1 {
+            margin-bottom: 24px;
+        }
+
+        .hero-text p {
+            font-size: 1.1rem;
+            margin-bottom: 32px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+            margin: 40px 0;
+        }
+
+        .stat-item {
+            border-left: 2px solid var(--gray-light);
+            padding-left: 20px;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--primary);
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+        }
+
+        .hero-image {
+            background: var(--light);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            height: 500px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            position: relative;
+        }
+
+        .hero-image::before {
+            content: '🏛️';
+            font-size: 120px;
+            opacity: 0.1;
+            position: absolute;
+        }
+
+        .hero-image-text {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: var(--gray-dark);
+        }
+
+        .hero-image-text strong {
+            display: block;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        /* ===== INFORMACIÓN INSTITUCIONAL ===== */
+        .info-bar {
+            background: var(--primary);
+            color: white;
+            padding: 16px 0;
+        }
+
+        .info-bar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .info-bar-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .info-bar-item strong {
+            font-weight: 500;
+            opacity: 0.9;
+        }
+
+        .info-bar-item span {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* ===== BASE LEGAL ===== */
+        .legal {
+            padding: 60px 0;
+            background: var(--light);
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .legal-content {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .legal-badge {
+            background: var(--white);
+            padding: 24px 32px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .legal-badge h4 {
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .legal-badge p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .legal-text {
+            flex: 2;
+        }
+
+        .legal-text p {
+            margin-bottom: 12px;
+        }
+
+        .legal-text small {
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+
+        /* ===== PROCESO (6 PASOS) ===== */
+        .process {
+            padding: 80px 0;
+            background: var(--white);
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1px;
+            background: var(--gray-light);
+            border: 1px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            margin-top: 40px;
+        }
+
+        .process-step {
+            background: var(--white);
+            padding: 32px 20px;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .process-step:hover {
+            background: var(--light);
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: white;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-weight: 500;
+        }
+
+        .process-step h4 {
+            margin-bottom: 12px;
+            font-size: 1rem;
+        }
+
+        .process-step p {
+            color: var(--gray);
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        .process-note {
+            margin-top: 30px;
+            text-align: center;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* ===== CLASIFICACIÓN DE RIESGO ===== */
+        .risk-classification {
+            padding: 80px 0;
+            background: var(--light);
+        }
+
+        .risk-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .risk-card {
+            background: var(--white);
+            padding: 32px 24px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            border-top: 4px solid transparent;
+        }
+
+        .risk-card.bajo {
+            border-top-color: #48BB78;
+        }
+
+        .risk-card.medio {
+            border-top-color: #ECC94B;
+        }
+
+        .risk-card.alto {
+            border-top-color: #F56565;
+        }
+
+        .risk-card.muy-alto {
+            border-top-color: #C53030;
+        }
+
+        .risk-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .risk-badge {
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .risk-badge.bajo {
+            background: #F0FFF4;
+            color: #2F855A;
+        }
+
+        .risk-badge.medio {
+            background: #FEFCBF;
+            color: #975A16;
+        }
+
+        .risk-badge.alto {
+            background: #FFF5F5;
+            color: #C53030;
+        }
+
+        .risk-badge.muy-alto {
+            background: #FFFAF0;
+            color: #9B2C2C;
+        }
+
+        .risk-price {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin: 16px 0;
+        }
+
+        .risk-price small {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: var(--gray);
+        }
+
+        .risk-features {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .risk-features li {
+            padding: 8px 0;
+            color: var(--gray-dark);
+            font-size: 0.9rem;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .risk-features li:last-child {
+            border-bottom: none;
+        }
+
+        .risk-examples {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--gray-light);
+        }
+
+        /* ===== DOCUMENTACIÓN ===== */
+        .documentation {
+            padding: 80px 0;
+            background: var(--white);
+        }
+
+        .docs-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .doc-category {
+            background: var(--light);
+            padding: 32px;
+            border-radius: var(--border-radius);
+        }
+
+        .doc-category h3 {
+            margin-bottom: 24px;
+            color: var(--primary);
+        }
+
+        .doc-list {
+            list-style: none;
+        }
+
+        .doc-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--gray-light);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .doc-list li:last-child {
+            border-bottom: none;
+        }
+
+        .doc-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--white);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+        }
+
+        .doc-info {
+            flex: 1;
+        }
+
+        .doc-info strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .doc-info span {
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+
+        /* ===== PREGUNTAS FRECUENTES ===== */
+        .faq {
+            padding: 80px 0;
+            background: var(--light);
+        }
+
+        .faq-grid {
+            max-width: 800px;
+            margin: 40px auto 0;
+        }
+
+        .faq-item {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            margin-bottom: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .faq-question {
+            padding: 20px 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .faq-question:hover {
+            background: var(--light);
+        }
+
+        .faq-answer {
+            padding: 0 24px 24px;
+            color: var(--gray);
+            display: none;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        .faq-item.active .faq-question {
+            background: var(--primary);
+            color: white;
+        }
+
+        .faq-item.active .faq-question span {
+            transform: rotate(180deg);
+        }
+
+        /* ===== CONTACTO ===== */
+        .contact {
+            padding: 80px 0;
+            background: var(--white);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-top: 40px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .contact-item {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .contact-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--light);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 20px;
+        }
+
+        .contact-text h4 {
+            margin-bottom: 8px;
+        }
+
+        .contact-text p {
+            color: var(--gray);
+        }
+
+        .contact-hours {
+            background: var(--light);
+            padding: 24px;
+            border-radius: var(--border-radius);
+        }
+
+        .contact-hours h4 {
+            margin-bottom: 16px;
+        }
+
+        .contact-hours table {
+            width: 100%;
+        }
+
+        .contact-hours td {
+            padding: 8px 0;
+            color: var(--gray);
+        }
+
+        .contact-hours td:last-child {
+            text-align: right;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        /* ===== CTA ===== */
+        .cta {
+            padding: 80px 0;
+            background: var(--primary);
+            color: white;
+        }
+
+        .cta-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .cta h2 {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .cta p {
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 32px;
+        }
+
+        .cta .btn {
+            background: white;
+            color: var(--primary);
+            font-size: 1.1rem;
+            padding: 16px 48px;
+        }
+
+        .cta .btn:hover {
+            background: var(--light);
+            transform: translateY(-2px);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo .logo-icon {
+            background: var(--accent);
+        }
+
+        .footer-logo .logo-text {
+            color: white;
+        }
+
+        .footer-address {
+            color: rgba(255,255,255,0.6);
+            line-height: 1.8;
+        }
+
+        .footer-links h4 {
+            color: white;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 30px;
+            text-align: center;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+            }
+
+            .process-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .risk-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .process-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .risk-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .docs-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+   <!-- Header -->
+<header class="header">
+    <div class="container">
+        <nav class="nav-bar">
+            <div class="logo">
+                <div class="logo-icon">MPI</div>
+                <div class="logo-text">
+                    Municipalidad Provincial de Ica
+                    <span>Plataforma oficial de trámites</span>
+                </div>
+            </div>
+
+            <div class="nav-menu">
+                <a href="#inicio" class="nav-link">Inicio</a>
+                <a href="#proceso" class="nav-link">Proceso</a>
+                <a href="#costos" class="nav-link">Costos</a>
+                <a href="#documentos" class="nav-link">Documentos</a>
+                <a href="#contacto" class="nav-link">Contacto</a>
+                <div class="nav-actions" style="display: flex; gap: 12px; align-items: center;">
+    <!-- Botón Funcionarios (vino tinto) -->
+    <a href="/municipal/login" style="
+        background: var(--secondary);
+        color: white;
+        padding: 10px 24px;
+        border-radius: 40px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s;
+        box-shadow: 0 4px 10px rgba(139,30,63,0.2);
+    " onmouseover="this.style.background='#9F2B4A'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 15px rgba(139,30,63,0.3)';" 
+       onmouseout="this.style.background='var(--secondary)'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 10px rgba(139,30,63,0.2)';">
+        Funcionarios
+    </a>
+
+    <!-- Botón Iniciar sesión (outline azul) -->
+    <a href="/auth/login" style="
+        background: transparent;
+        color: var(--primary);
+        padding: 10px 24px;
+        border-radius: 40px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s;
+        border: 2px solid var(--primary);
+    " onmouseover="this.style.background='var(--primary)'; this.style.color='white';" 
+       onmouseout="this.style.background='transparent'; this.style.color='var(--primary)';">
+    Iniciarsesión
+    </a>
+
+    <!-- Botón Registrarse (azul sólido) -->
+    <a href="/auth/registro" style="
+        background: var(--primary);
+        color: white;
+        padding: 10px 24px;
+        border-radius: 40px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s;
+        box-shadow: 0 4px 10px rgba(11,59,92,0.2);
+    " onmouseover="this.style.background='var(--primary-light)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 15px rgba(11,59,92,0.3)';" 
+       onmouseout="this.style.background='var(--primary)'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 10px rgba(11,59,92,0.2)';">
+        Registrarse
+    </a>
+</div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <!-- Hero -->
+    <section class="hero" id="inicio">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="subtitle">TRÁMITE 100% DIGITAL</div>
+                    <h1>Licencia de Funcionamiento<br>en línea</h1>
+                    <p>Plataforma oficial de la Municipalidad Provincial de Ica para la obtención de licencias de funcionamiento según Ley N° 28976 y normas municipales vigentes.</p>
+                    
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">5-10</div>
+                            <div class="stat-label">días hábiles</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">100%</div>
+                            <div class="stat-label">en línea</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">disponible</div>
+                        </div>
+                    </div>
+
+                    <div class="hero-actions">
+                        <a href="/solicitud/paso1" class="btn btn-primary">Iniciar trámite</a>
+                        <a href="#proceso" class="btn btn-outline">Conocer proceso</a>
+                    </div>
+                </div>
+
+                <div class="hero-image">
+                    <div class="hero-image-text">
+                        <strong>Plataforma oficial</strong>
+                        <p>Municipalidad Provincial de Ica</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Barra informativa -->
+    <div class="info-bar">
+        <div class="container">
+            <div class="info-bar-content">
+                <div class="info-bar-item">
+                    <strong>📅</strong>
+                    <span>Atención: Lun-Vie 8:00-16:00</span>
+                </div>
+                <div class="info-bar-item">
+                    <strong>📞</strong>
+                    <span>(056) 123456</span>
+                </div>
+                <div class="info-bar-item">
+                    <strong>📧</strong>
+                    <span>licencias@muniica.gob.pe</span>
+                </div>
+                <div class="info-bar-item">
+                    <strong>📍</strong>
+                    <span>Plaza de Armas - Ica</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Base Legal -->
+    <section class="legal">
+        <div class="container">
+            <div class="legal-content">
+                <div class="legal-badge">
+                    <h4>Ley N° 28976</h4>
+                    <p>Ley Marco de Licencia de Funcionamiento</p>
+                </div>
+                <div class="legal-badge">
+                    <h4>Ordenanza N° 001-2024-MPI</h4>
+                    <p>Reglamento del procedimiento en la provincia de Ica</p>
+                </div>
+                <div class="legal-text">
+                    <p>Este procedimiento se rige por la normativa nacional y las disposiciones específicas de la Municipalidad Provincial de Ica, garantizando la seguridad jurídica de su establecimiento.</p>
+                    <small>Resolución de Alcaldía N° 123-2024-MPI</small>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proceso de 6 pasos -->
+    <section class="process" id="proceso">
+        <div class="container">
+            <div class="section-title">
+                <h2>Procedimiento en 6 pasos</h2>
+                <p>El trámite se realiza completamente en línea a través de nuestra plataforma</p>
+            </div>
+
+            <div class="process-grid">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <h4>Clasificación</h4>
+                    <p>Seleccione el rubro y determinamos automáticamente el nivel de riesgo</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <h4>Documentación</h4>
+                    <p>Adjunte los anexos según el nivel de riesgo de su negocio</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <h4>Zonificación</h4>
+                    <p>Verificamos la compatibilidad con la zonificación urbana</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <h4>Revisión</h4>
+                    <p>Confirme que todos los datos sean correctos</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">5</div>
+                    <h4>Pago</h4>
+                    <p>Realice el pago de derechos a través de nuestra pasarela</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">6</div>
+                    <h4>Licencia</h4>
+                    <p>Obtenga su licencia digital con código verificador</p>
+                </div>
+            </div>
+
+            <div class="process-note">
+                <p>Los plazos varían según el nivel de riesgo: bajo/medio (emisión inmediata), alto/muy alto (5-10 días hábiles)</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Clasificación de riesgo -->
+    <section class="risk-classification" id="costos">
+        <div class="container">
+            <div class="section-title">
+                <h2>Clasificación y costos</h2>
+                <p>Según el rubro de su negocio, se determina el nivel de riesgo y los requisitos</p>
+            </div>
+
+            <div class="risk-grid">
+                <div class="risk-card bajo">
+                    <div class="risk-header">
+                        <h3>Riesgo Bajo</h3>
+                        <span class="risk-badge bajo">ITSE Posterior</span>
+                    </div>
+                    <div class="risk-price">S/ 140 <small>/anual</small></div>
+                    <ul class="risk-features">
+                        <li>Licencia inmediata</li>
+                        <li>Inspección programada</li>
+                        <li>Anexos: 1, 2, 4 y 18</li>
+                    </ul>
+                    <div class="risk-examples">
+                        Bodegas, peluquerías, librerías, tiendas de ropa
+                    </div>
+                </div>
+
+                <div class="risk-card medio">
+                    <div class="risk-header">
+                        <h3>Riesgo Medio</h3>
+                        <span class="risk-badge medio">ITSE Posterior</span>
+                    </div>
+                    <div class="risk-price">S/ 150 <small>/anual</small></div>
+                    <ul class="risk-features">
+                        <li>Licencia inmediata</li>
+                        <li>Inspección prioritaria</li>
+                        <li>Anexos: 1, 2, 4 y 18</li>
+                    </ul>
+                    <div class="risk-examples">
+                        Restaurantes, farmacias, gimnasios, talleres
+                    </div>
+                </div>
+
+                <div class="risk-card alto">
+                    <div class="risk-header">
+                        <h3>Riesgo Alto</h3>
+                        <span class="risk-badge alto">ITSE Previo</span>
+                    </div>
+                    <div class="risk-price">S/ 170 <small>/anual</small></div>
+                    <ul class="risk-features">
+                        <li>Requiere certificado ITSE</li>
+                        <li>Inspección obligatoria</li>
+                        <li>Anexos: 18</li>
+                    </ul>
+                    <div class="risk-examples">
+                        Discotecas, karaokes, fábricas pequeñas
+                    </div>
+                </div>
+
+                <div class="risk-card muy-alto">
+                    <div class="risk-header">
+                        <h3>Riesgo Muy Alto</h3>
+                        <span class="risk-badge muy-alto">ITSE Previo</span>
+                    </div>
+                    <div class="risk-price">S/ 192 <small>/anual</small></div>
+                    <ul class="risk-features">
+                        <li>Requiere certificado ITSE</li>
+                        <li>Inspecciones periódicas</li>
+                        <li>Anexos: 18</li>
+                    </ul>
+                    <div class="risk-examples">
+                        Gasolineras, plantas industriales, depósitos
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Documentación -->
+    <section class="documentation" id="documentos">
+        <div class="container">
+            <div class="section-title">
+                <h2>Documentación requerida</h2>
+                <p>Según el nivel de riesgo, deberá adjuntar los siguientes anexos</p>
+            </div>
+
+            <div class="docs-grid">
+                <div class="doc-category">
+                    <h3>Para todos los niveles</h3>
+                    <ul class="doc-list">
+                        <li>
+                            <span class="doc-icon">📸</span>
+                            <div class="doc-info">
+                                <strong>Anexo 18</strong>
+                                <span>Fotografías del local (exterior, interior, fachada)</span>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="doc-icon">🆔</span>
+                            <div class="doc-info">
+                                <strong>DNI / RUC</strong>
+                                <span>Documento de identidad del solicitante</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="doc-category">
+                    <h3>Bajo y Medio Riesgo</h3>
+                    <ul class="doc-list">
+                        <li>
+                            <span class="doc-icon">📋</span>
+                            <div class="doc-info">
+                                <strong>Anexo 1</strong>
+                                <span>Solicitud de inspección técnica</span>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="doc-icon">🏠</span>
+                            <div class="doc-info">
+                                <strong>Anexo 2</strong>
+                                <span>Características de la vivienda (noble/rústico)</span>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="doc-icon">🔒</span>
+                            <div class="doc-info">
+                                <strong>Anexo 4</strong>
+                                <span>Declaración de seguridad (extintores, llaves termomagnéticas)</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq">
+        <div class="container">
+            <div class="section-title">
+                <h2>Preguntas frecuentes</h2>
+                <p>Resolvemos las dudas más comunes sobre el trámite</p>
+            </div>
+
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+                        ¿Cuál es el plazo para obtener mi licencia?
+                        <span>▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Para negocios de bajo y medio riesgo, la licencia se emite inmediatamente después del pago. Para alto y muy alto riesgo, el plazo máximo es de 10 días hábiles después de presentar el certificado ITSE.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+                        ¿Qué es el ITSE y cuándo lo necesito?
+                        <span>▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        La Inspección Técnica de Seguridad en Edificaciones verifica las condiciones de seguridad de su local. Es previa para negocios de alto y muy alto riesgo, y posterior para bajo y medio riesgo.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+                        ¿Puedo pagar en efectivo?
+                        <span>▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Sí, a través de PagoEfectivo puede generar un código para pagar en cualquier agente bancario o bodega autorizada a nivel nacional.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+                        ¿La licencia digital tiene validez legal?
+                        <span>▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Sí, la licencia digital tiene la misma validez que la física. Incluye un código QR que permite verificar su autenticidad en nuestro portal.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+                        ¿Qué rubros requieren ITSE previo?
+                        <span>▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Discotecas, bares, karaokes, fábricas, gasolineras, y todos los establecimientos clasificados como alto o muy alto riesgo según la normativa vigente.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto -->
+    <section class="contact" id="contacto">
+        <div class="container">
+            <div class="section-title">
+                <h2>Atención al ciudadano</h2>
+                <p>Canales oficiales de atención y consultas</p>
+            </div>
+
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div class="contact-text">
+                            <h4>Oficina de Desarrollo Económico</h4>
+                            <p>Palacio Municipal - Plaza de Armas s/n, Ica<br>Segundo piso - Módulo 4</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <div class="contact-text">
+                            <h4>Central telefónica</h4>
+                            <p>(056) 123456 Anexo 1204<br>consultas@muniica.gob.pe</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-hours">
+                        <h4>Horario de atención</h4>
+                        <table>
+                            <tr>
+                                <td>Lunes a Viernes</td>
+                                <td>8:00 - 16:00</td>
+                            </tr>
+                            <tr>
+                                <td>Sábados</td>
+                                <td>9:00 - 12:00</td>
+                            </tr>
+                            <tr>
+                                <td>Plataforma digital</td>
+                                <td>24/7</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">🔍</div>
+                        <div class="contact-text">
+                            <h4>Defensa Civil</h4>
+                            <p>Para consultas sobre ITSE e inspecciones<br>defensacivil@muniica.gob.pe</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">📋</div>
+                        <div class="contact-text">
+                            <h4>Fiscalización</h4>
+                            <p>Para reportar irregularidades<br>fiscalizacion@muniica.gob.pe</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Inicie su trámite ahora</h2>
+                <p>Formalice su negocio en línea, sin colas ni papeleos. La Municipalidad de Ica a su servicio.</p>
+                <a href="/solicitud/paso1" class="btn">Iniciar trámite</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-logo">
+                        <div class="logo-icon">MPI</div>
+                        <div class="logo-text">Municipalidad Provincial de Ica</div>
+                    </div>
+                    <div class="footer-address">
+                        <p>Plaza de Armas s/n<br>Ica, Perú</p>
+                        <p style="margin-top: 16px;">RUC: 20154876543<br>info@muniica.gob.pe</p>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Trámites</h4>
+                    <ul>
+                        <li><a href="/solicitud/paso1">Nueva licencia</a></li>
+                        <li><a href="#">Renovación</a></li>
+                        <li><a href="#">Modificación</a></li>
+                        <li><a href="#">Seguimiento</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Información</h4>
+                    <ul>
+                        <li><a href="#proceso">Procedimiento</a></li>
+                        <li><a href="#costos">Costos</a></li>
+                        <li><a href="#documentos">Documentos</a></li>
+                        <li><a href="#faq">Preguntas frecuentes</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Contacto</h4>
+                    <ul>
+                        <li><a href="tel:056123456">(056) 123456</a></li>
+                        <li><a href="mailto:licencias@muniica.gob.pe">licencias@muniica.gob.pe</a></li>
+                        <li><a href="#">Libro de reclamaciones</a></li>
+                        <li><a href="#">Transparencia</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2024 Municipalidad Provincial de Ica. Todos los derechos reservados.</p>
+                <p style="margin-top: 8px;">Plataforma oficial - Gerencia de Desarrollo Económico</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

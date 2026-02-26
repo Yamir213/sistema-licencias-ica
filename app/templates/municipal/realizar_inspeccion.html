@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es-PE">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realizar Inspección - Municipalidad de Ica</title>
+    <style>
+        :root {
+            --primary: #0B3B5C;
+            --primary-light: #1E4F72;
+            --secondary: #8B1E3F;
+            --success: #047857;
+            --warning: #B45309;
+            --danger: #B91C1C;
+            --dark: #1C2B3A;
+            --gray: #718096;
+            --light: #F7FAFC;
+            --white: #FFFFFF;
+            --border-radius: 8px;
+            --shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--light);
+        }
+
+        .header {
+            background: var(--white);
+            border-bottom: 1px solid #e2e8f0;
+            padding: 16px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .user-badge {
+            background: var(--secondary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+        }
+
+        .btn-outline {
+            padding: 8px 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--border-radius);
+            color: var(--gray);
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 40px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: var(--gray);
+            margin-bottom: 30px;
+        }
+
+        .info-box {
+            background: var(--light);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .checklist {
+            margin: 30px 0;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: var(--light);
+            border-radius: var(--border-radius);
+            margin-bottom: 10px;
+        }
+
+        .checklist-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .checklist-item label {
+            flex: 1;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--border-radius);
+            font-family: inherit;
+            resize: vertical;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-light);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid #e2e8f0;
+            color: var(--gray);
+            margin-top: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">MPI</div>
+            <div>
+                <strong>Municipalidad de Ica</strong><br>
+                <small style="color: var(--gray);">Realizar Inspección ITSE</small>
+            </div>
+        </div>
+        <div class="user-menu">
+            <span class="user-badge">{{ user.tipo_usuario|upper }}</span>
+            <span>{{ user.nombre }}</span>
+            <a href="/municipal/inspeccion/{{ inspeccion.id }}" class="btn-outline">Cancelar</a>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="card">
+            <h1>Realizar Inspección ITSE</h1>
+            <p class="subtitle">Complete el checklist de seguridad y las observaciones</p>
+
+            <div class="info-box">
+                <h3 style="margin-bottom: 15px;">{{ inspeccion.solicitud.nombre_negocio }}</h3>
+                <div class="info-grid">
+                    <div>
+                        <strong>Expediente:</strong> {{ inspeccion.solicitud.numero_expediente }}
+                    </div>
+                    <div>
+                        <strong>Riesgo:</strong> {{ inspeccion.solicitud.nivel_riesgo|upper }}
+                    </div>
+                </div>
+                <p><strong>Dirección:</strong> {{ inspeccion.solicitud.direccion_negocio }}</p>
+                <p><strong>Distrito:</strong> {{ inspeccion.solicitud.distrito }}</p>
+            </div>
+
+            <form action="/municipal/inspeccion/{{ inspeccion.id }}/finalizar" method="post">
+                <h3 style="margin-bottom: 20px;">Checklist de seguridad</h3>
+                
+                <div class="checklist">
+                    <div class="checklist-item">
+                        <input type="checkbox" name="extintores" id="extintores">
+                        <label for="extintores">✅ Extintores vigentes y accesibles</label>
+                    </div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" name="luces_emergencia" id="luces_emergencia">
+                        <label for="luces_emergencia">💡 Luces de emergencia operativas</label>
+                    </div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" name="señalizacion" id="señalizacion">
+                        <label for="señalizacion">⚠️ Señalización de seguridad visible</label>
+                    </div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" name="sistema_electrico" id="sistema_electrico">
+                        <label for="sistema_electrico">⚡ Sistema eléctrico seguro (sin cable mellizo)</label>
+                    </div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" name="via_evacuacion" id="via_evacuacion">
+                        <label for="via_evacuacion">🚪 Vías de evacuación despejadas</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="observaciones">📝 Observaciones de la inspección</label>
+                    <textarea name="observaciones" id="observaciones" rows="4" placeholder="Detalle cualquier observación encontrada durante la inspección..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="recomendaciones">💡 Recomendaciones</label>
+                    <textarea name="recomendaciones" id="recomendaciones" rows="3" placeholder="Recomendaciones para el administrado..."></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Finalizar inspección
+                </button>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

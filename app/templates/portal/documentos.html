@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="es-PE">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Documentos - Municipalidad Provincial de Ica</title>
+    <style>
+        :root {
+            --primary: #0B3B5C;
+            --primary-light: #1E4F72;
+            --secondary: #8B1E3F;
+            --accent: #C49A6C;
+            --dark: #1C2B3A;
+            --gray-dark: #4A5568;
+            --gray: #718096;
+            --gray-light: #E2E8F0;
+            --light: #F7FAFC;
+            --white: #FFFFFF;
+            --success: #047857;
+            --shadow: 0 4px 20px rgba(0,0,0,0.05);
+            --shadow-hover: 0 8px 30px rgba(11,59,92,0.12);
+            --border-radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--light);
+            color: var(--dark);
+        }
+
+        .header {
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-light);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 16px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .logo-text {
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .logo-text span {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .user-name {
+            font-weight: 500;
+            color: var(--gray-dark);
+        }
+
+        .btn-outline {
+            padding: 8px 16px;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            color: var(--gray-dark);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .btn-outline:hover {
+            background: var(--light);
+            border-color: var(--gray);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 40px auto;
+            padding: 0 40px;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 30px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 24px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--light);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 20px;
+        }
+
+        .stat-info h3 {
+            color: var(--gray);
+            font-size: 0.9rem;
+            font-weight: 400;
+            margin-bottom: 4px;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .section {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--gray-light);
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .documentos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .documento-card {
+            background: var(--light);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border: 1px solid var(--gray-light);
+            transition: all 0.2s;
+        }
+
+        .documento-card:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .documento-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--white);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 24px;
+        }
+
+        .documento-info {
+            flex: 1;
+        }
+
+        .documento-titulo {
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--dark);
+        }
+
+        .documento-desc {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-bottom: 8px;
+        }
+
+        .documento-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        .documento-fecha {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: #DEF7EC;
+            color: #03543F;
+        }
+
+        .badge-warning {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .btn-download {
+            padding: 6px 16px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .btn-download:hover {
+            background: var(--primary-light);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--gray);
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .documentos-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .page-header {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">MPI</div>
+                <div class="logo-text">
+                    Municipalidad de Ica
+                    <span>Documentos Digitales</span>
+                </div>
+            </div>
+            <div class="user-menu">
+                <span class="user-name">{{ user.nombre }}</span>
+                <a href="/auth/logout" class="btn-outline">Cerrar sesión</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="/portal/dashboard">Dashboard</a>
+            <span>›</span>
+            <span>Documentos digitales</span>
+        </div>
+
+        <!-- Header -->
+        <div class="page-header">
+            <h1>Mis documentos digitales</h1>
+            <a href="/solicitud/paso1" class="btn-outline" style="padding: 12px 24px;">+ Nueva solicitud</a>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">📋</div>
+                <div class="stat-info">
+                    <h3>Licencias emitidas</h3>
+                    <div class="stat-number">{{ licencias|length }}</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">💰</div>
+                <div class="stat-info">
+                    <h3>Vouchers de pago</h3>
+                    <div class="stat-number">{{ vouchers|length }}</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📎</div>
+                <div class="stat-info">
+                    <h3>Documentos subidos</h3>
+                    <div class="stat-number">{{ documentos|length }}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Licencias -->
+        <div class="section">
+            <div class="section-title">
+                <span>📋</span>
+                <h3>Licencias de funcionamiento</h3>
+            </div>
+
+            {% if licencias %}
+            <div class="documentos-grid">
+                {% for lic in licencias %}
+                <div class="documento-card">
+                    <div class="documento-icon">🎫</div>
+                    <div class="documento-info">
+                        <div class="documento-titulo">Licencia N° {{ lic.numero_licencia }}</div>
+                        <div class="documento-desc">{{ lic.nombre_negocio }}</div>
+                        <div class="documento-meta">
+                            <span class="documento-fecha">📅 {{ lic.fecha_emision.strftime('%d/%m/%Y') }}</span>
+                            <span class="badge badge-success">Vigente</span>
+                        </div>
+                    </div>
+                    <a href="/solicitud/licencia/{{ lic.id }}/descargar" class="btn-download">PDF</a>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <div class="empty-state-icon">🎫</div>
+                <h3>No tiene licencias emitidas</h3>
+                <p>Las licencias aparecerán aquí una vez que su trámite sea aprobado.</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Vouchers -->
+        <div class="section">
+            <div class="section-title">
+                <span>💰</span>
+                <h3>Vouchers de pago</h3>
+            </div>
+
+            {% if vouchers %}
+            <div class="documentos-grid">
+                {% for pago in vouchers %}
+                <div class="documento-card">
+                    <div class="documento-icon">🧾</div>
+                    <div class="documento-info">
+                        <div class="documento-titulo">Voucher de pago</div>
+                        <div class="documento-desc">
+                            Expediente: {{ pago.solicitud.numero_expediente }}<br>
+                            Monto: S/ {{ "%.2f"|format(pago.monto) }}
+                        </div>
+                        <div class="documento-meta">
+                            <span class="documento-fecha">📅 {{ pago.fecha_transaccion.strftime('%d/%m/%Y') }}</span>
+                            <span class="badge badge-success">Pagado</span>
+                        </div>
+                    </div>
+                    <a href="/solicitud/pago/{{ pago.id }}/voucher" class="btn-download">PDF</a>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <div class="empty-state-icon">🧾</div>
+                <h3>No hay vouchers de pago</h3>
+                <p>Los comprobantes aparecerán después de realizar sus pagos.</p>
+            </div>
+            {% endif %}
+        </div>
+    </main>
+</body>
+</html>

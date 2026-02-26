@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="es-PE">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Solicitud - Municipalidad Provincial de Ica</title>
+    <style>
+        :root {
+            --primary: #0B3B5C;
+            --primary-light: #1E4F72;
+            --secondary: #8B1E3F;
+            --accent: #C49A6C;
+            --dark: #1C2B3A;
+            --gray-dark: #4A5568;
+            --gray: #718096;
+            --gray-light: #E2E8F0;
+            --light: #F7FAFC;
+            --white: #FFFFFF;
+            --success: #047857;
+            --warning: #B45309;
+            --danger: #B91C1C;
+            --info: #1E429F;
+            --shadow: 0 4px 20px rgba(0,0,0,0.05);
+            --shadow-hover: 0 8px 30px rgba(11,59,92,0.12);
+            --border-radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-light);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 16px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .logo-text {
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .logo-text span {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .user-name {
+            font-weight: 500;
+            color: var(--gray-dark);
+        }
+
+        .btn-outline {
+            padding: 8px 16px;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            color: var(--gray-dark);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .btn-outline:hover {
+            background: var(--light);
+            border-color: var(--gray);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1280px;
+            margin: 40px auto;
+            padding: 0 40px;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 30px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        /* Header Section */
+        .solicitud-header {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .solicitud-titulo h1 {
+            font-size: 1.8rem;
+            font-weight: 500;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .solicitud-titulo p {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        .solicitud-estado {
+            text-align: right;
+        }
+
+        .estado-badge {
+            display: inline-block;
+            padding: 8px 24px;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+
+        .estado-badge.borrador {
+            background: var(--gray-light);
+            color: var(--gray-dark);
+        }
+
+        .estado-badge.pendiente_pago {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .estado-badge.pagado {
+            background: #DEF7EC;
+            color: #03543F;
+        }
+
+        .estado-badge.licencia_emitida {
+            background: #E1EFFE;
+            color: #1E429F;
+        }
+
+        .fecha-solicitud {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Alertas */
+        .alert {
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .alert-warning {
+            background: #FEF3C7;
+            border-left: 4px solid #D97706;
+            color: #92400E;
+        }
+
+        .alert-success {
+            background: #DEF7EC;
+            border-left: 4px solid #059669;
+            color: #03543F;
+        }
+
+        .alert-info {
+            background: #E1EFFE;
+            border-left: 4px solid #1E429F;
+            color: #1E429F;
+        }
+
+        /* Grid de información */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .info-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--gray-light);
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .info-row {
+            display: flex;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .info-label {
+            width: 140px;
+            color: var(--gray);
+        }
+
+        .info-value {
+            flex: 1;
+            color: var(--dark);
+            font-weight: 500;
+        }
+
+        .riesgo-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .riesgo-bajo {
+            background: #DEF7EC;
+            color: #03543F;
+        }
+
+        .riesgo-medio {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .riesgo-alto {
+            background: #FDE8E8;
+            color: #9B1C1C;
+        }
+
+        /* Timeline */
+        .timeline-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-weight: 600;
+            z-index: 2;
+            border: 2px solid var(--white);
+        }
+
+        .timeline-icon.completed {
+            background: var(--success);
+            color: white;
+        }
+
+        .timeline-icon.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .timeline-content {
+            flex: 1;
+        }
+
+        .timeline-title {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 4px;
+        }
+
+        .timeline-date {
+            color: var(--gray);
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+        }
+
+        .timeline-desc {
+            color: var(--gray-dark);
+            font-size: 0.9rem;
+        }
+
+        /* Documentos */
+        .documentos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .documento-item {
+            background: var(--light);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border: 1px solid var(--gray-light);
+        }
+
+        .documento-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--white);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 20px;
+        }
+
+        .documento-info {
+            flex: 1;
+        }
+
+        .documento-nombre {
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .documento-estado {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        .documento-estado.validado {
+            color: var(--success);
+        }
+
+        .btn-download {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+
+        /* Pago info */
+        .pago-info {
+            background: var(--light);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .pago-monto {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .pago-monto small {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--gray);
+        }
+
+        .pago-estado {
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 500;
+        }
+
+        .pago-estado.pagado {
+            background: #DEF7EC;
+            color: #03543F;
+        }
+
+        .pago-estado.pendiente {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        /* Botones de acción */
+        .action-buttons {
+            display: flex;
+            gap: 16px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-light);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #065F46;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .solicitud-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .solicitud-estado {
+                text-align: center;
+            }
+            
+            .info-row {
+                flex-direction: column;
+            }
+            
+            .info-label {
+                width: auto;
+                margin-bottom: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">MPI</div>
+                <div class="logo-text">
+                    Municipalidad de Ica
+                    <span>Plataforma de Licencias</span>
+                </div>
+            </div>
+            <div class="user-menu">
+                <span class="user-name">{{ user.nombre }}</span>
+                <a href="/auth/logout" class="btn-outline">Cerrar sesión</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="/portal/dashboard">Dashboard</a>
+            <span>›</span>
+            <span>Detalle de solicitud</span>
+        </div>
+
+        <!-- Header de solicitud -->
+        <div class="solicitud-header">
+            <div class="solicitud-titulo">
+                <h1>{{ solicitud.numero_expediente }}</h1>
+                <p>{{ solicitud.nombre_negocio }} • {{ solicitud.distrito }}</p>
+            </div>
+            <div class="solicitud-estado">
+                <span class="estado-badge {{ solicitud.estado }}">
+                    {% if solicitud.estado == 'borrador' %}Borrador
+                    {% elif solicitud.estado == 'pendiente_pago' %}Pendiente de pago
+                    {% elif solicitud.estado == 'pagado' %}Pagado - En revisión
+                    {% elif solicitud.estado == 'licencia_emitida' %}Licencia emitida
+                    {% else %}{{ solicitud.estado }}
+                    {% endif %}
+                </span>
+                <div class="fecha-solicitud">Presentado: {{ solicitud.created_at.strftime('%d/%m/%Y %H:%M') }}</div>
+            </div>
+        </div>
+
+        <!-- Alertas según estado -->
+        {% if solicitud.estado == 'pendiente_pago' %}
+        <div class="alert alert-warning">
+            <span style="font-size: 24px;">💰</span>
+            <div>
+                <strong>Pago pendiente</strong><br>
+                Complete el pago de S/ {{ "%.2f"|format(solicitud.monto_pago) }} para continuar con el trámite.
+            </div>
+        </div>
+        {% elif solicitud.estado == 'licencia_emitida' %}
+        <div class="alert alert-success">
+            <span style="font-size: 24px;">✅</span>
+            <div>
+                <strong>Licencia emitida</strong><br>
+                Su licencia de funcionamiento ha sido emitida y está disponible para descargar.
+            </div>
+        </div>
+        {% elif solicitud.requiere_itse_previa and not solicitud.itse_aprobado %}
+        <div class="alert alert-info">
+            <span style="font-size: 24px;">🔍</span>
+            <div>
+                <strong>Certificado ITSE requerido</strong><br>
+                Por el nivel de riesgo de su negocio, debe presentar el certificado ITSE.
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Grid de información -->
+        <div class="info-grid">
+            <!-- Información del titular -->
+            <div class="info-card">
+                <div class="card-title">
+                    <span>👤</span>
+                    <h3>Información del titular</h3>
+                </div>
+                
+                <div class="info-row">
+                    <span class="info-label">Tipo de persona:</span>
+                    <span class="info-value">
+                        {% if user.tipo_persona == 'natural' %}Persona Natural{% else %}Persona Jurídica{% endif %}
+                    </span>
+                </div>
+                
+                {% if user.tipo_persona == 'natural' %}
+                <div class="info-row">
+                    <span class="info-label">DNI:</span>
+                    <span class="info-value">{{ user.dni or 'No registrado' }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Nombres:</span>
+                    <span class="info-value">{{ user.nombres }} {{ user.apellido_paterno }} {{ user.apellido_materno }}</span>
+                </div>
+                {% else %}
+                <div class="info-row">
+                    <span class="info-label">RUC:</span>
+                    <span class="info-value">{{ user.ruc or 'No registrado' }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Razón Social:</span>
+                    <span class="info-value">{{ user.razon_social }}</span>
+                </div>
+                {% endif %}
+                
+                <div class="info-row">
+                    <span class="info-label">Email:</span>
+                    <span class="info-value">{{ user.email }}</span>
+                </div>
+                
+                <div class="info-row">
+                    <span class="info-label">Teléfono:</span>
+                    <span class="info-value">{{ user.telefono or 'No registrado' }}</span>
+                </div>
+                
+                <div class="info-row">
+                    <span class="info-label">Dirección:</span>
+                    <span class="info-value">{{ user.direccion or 'No registrada' }}</span>
+                </div>
+            </div>
+
+            <!-- Información del negocio -->
+            <div class="info-card">
+                <div class="card-title">
+                    <span>🏪</span>
+                    <h3>Información del negocio</h3>
+                </div>
+                
+                <div class="info-row">
+                    <span class="info-label">Nombre:</span>
+                    <span class="info-value">{{ solicitud.nombre_negocio }}</span>
+                </div>
+                
+                <div class="info-row">
+                    <span class="info-label">Rubro:</span>
+                    <span class="info-value">{{ rubro.nombre }}</span>
+                </div>
+                
+                <div class="info-row">
+                    <span class="info-label">Riesgo:</span>
+                    <span class="info-value">
+                        {{ solicitud.nivel_riesgo|upper }}
+                        <span class="riesgo-badge riesgo-{{ solicitud.nivel_riesgo }}">
+                            {{ solicitud.nivel_riesgo|upper }}
+                        </span>
+                    </span>
+                </div>
+                
+                <div class="info-row">
+                    <span class="info-label">Dirección:</span>
+                    <span class="info-value">{{ solicitud.direccion_negocio }}</span>
+                </div>
+                
+                <div class="info-row">
+                    <span class="info-label">Referencia:</span>
+                    <span class="info-value">{{ solicitud.referencia or 'No especificada' }}</span>
+                </div>
+                
+                <div class="info-row">
+                    <span class="info-label">Distrito:</span>
+                    <span class="info-value">{{ solicitud.distrito }}</span>
+                </div>
+                
+                <div class="info-row">
+                    <span class="info-label">Área:</span>
+                    <span class="info-value">{{ solicitud.area_local or 'No especificada' }} m²</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Timeline de seguimiento -->
+        <div class="timeline-card">
+            <div class="card-title">
+                <span>📋</span>
+                <h3>Seguimiento del trámite</h3>
+            </div>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-icon completed">✓</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Solicitud presentada</div>
+                        <div class="timeline-date">{{ solicitud.created_at.strftime('%d/%m/%Y %H:%M') }}</div>
+                        <div class="timeline-desc">Formulario completado correctamente</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-icon {% if solicitud.fecha_pago %}completed{% else %}active{% endif %}">
+                        {% if solicitud.fecha_pago %}✓{% else %}2{% endif %}
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Pago de derechos</div>
+                        {% if solicitud.fecha_pago %}
+                        <div class="timeline-date">{{ solicitud.fecha_pago.strftime('%d/%m/%Y %H:%M') }}</div>
+                        <div class="timeline-desc">Monto: S/ {{ "%.2f"|format(solicitud.monto_pago) }}</div>
+                        {% else %}
+                        <div class="timeline-desc">Pendiente - Monto: S/ {{ "%.2f"|format(solicitud.monto_pago) }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {% if solicitud.requiere_itse_previa %}
+                <div class="timeline-item">
+                    <div class="timeline-icon {% if solicitud.itse_aprobado %}completed{% else %}active{% endif %}">
+                        {% if solicitud.itse_aprobado %}✓{% else %}3{% endif %}
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Certificado ITSE</div>
+                        {% if solicitud.itse_aprobado %}
+                        <div class="timeline-date">{{ solicitud.fecha_itse.strftime('%d/%m/%Y') }}</div>
+                        <div class="timeline-desc">Certificado N°: {{ solicitud.numero_itse }}</div>
+                        {% else %}
+                        <div class="timeline-desc">Requisito obligatorio para negocios de {{ solicitud.nivel_riesgo }} riesgo</div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="timeline-item">
+                    <div class="timeline-icon {% if solicitud.estado == 'licencia_emitida' %}completed{% else %}active{% endif %}">
+                        {% if solicitud.estado == 'licencia_emitida' %}✓{% else %}4{% endif %}
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Licencia de funcionamiento</div>
+                        {% if solicitud.estado == 'licencia_emitida' %}
+                        <div class="timeline-date">{{ solicitud.fecha_emision.strftime('%d/%m/%Y') }}</div>
+                        <div class="timeline-desc">
+                            N° {{ solicitud.numero_licencia }} - Vence: {{ solicitud.fecha_vencimiento.strftime('%d/%m/%Y') }}
+                        </div>
+                        {% else %}
+                        <div class="timeline-desc">En proceso de revisión</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Documentos -->
+        <div class="timeline-card">
+            <div class="card-title">
+                <span>📎</span>
+                <h3>Documentos y anexos</h3>
+            </div>
+            
+            <div class="documentos-grid">
+                <div class="documento-item">
+                    <div class="documento-icon">🆔</div>
+                    <div class="documento-info">
+                        <div class="documento-nombre">DNI / RUC</div>
+                        <div class="documento-estado validado">✓ Verificado</div>
+                    </div>
+                </div>
+                
+                <div class="documento-item">
+                    <div class="documento-icon">📸</div>
+                    <div class="documento-info">
+                        <div class="documento-nombre">Anexo 18 - Fotos del local</div>
+                        <div class="documento-estado">⏳ Pendiente</div>
+                    </div>
+                    <a href="#" class="btn-download">Subir</a>
+                </div>
+                
+                {% if solicitud.nivel_riesgo in ['bajo', 'medio'] %}
+                <div class="documento-item">
+                    <div class="documento-icon">📋</div>
+                    <div class="documento-info">
+                        <div class="documento-nombre">Anexo 1 - Solicitud inspección</div>
+                        <div class="documento-estado">⏳ Pendiente</div>
+                    </div>
+                </div>
+                {% endif %}
+                
+                {% if solicitud.estado == 'licencia_emitida' %}
+                <div class="documento-item">
+                    <div class="documento-icon">🎉</div>
+                    <div class="documento-info">
+                        <div class="documento-nombre">Licencia de funcionamiento</div>
+                        <div class="documento-estado validado">✓ Emitida</div>
+                    </div>
+                    <a href="/solicitud/licencia/{{ solicitud.id }}/descargar" class="btn-download">Descargar</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Información de pago -->
+        <div class="timeline-card">
+            <div class="card-title">
+                <span>💰</span>
+                <h3>Información de pago</h3>
+            </div>
+            
+            <div class="pago-info">
+                <div>
+                    <div class="pago-monto">
+                        S/ {{ "%.2f"|format(solicitud.monto_pago or 0) }}
+                        <small>I.G.V. incluido</small>
+                    </div>
+                </div>
+                <div>
+                    {% if solicitud.fecha_pago %}
+                    <span class="pago-estado pagado">✓ Pagado el {{ solicitud.fecha_pago.strftime('%d/%m/%Y') }}</span>
+                    {% else %}
+                    <span class="pago-estado pendiente">⏳ Pendiente de pago</span>
+                    {% endif %}
+                </div>
+            </div>
+            
+            {% if solicitud.fecha_pago %}
+            <div style="margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="info-row">
+                    <span class="info-label">Comprobante:</span>
+                    <span class="info-value">{{ solicitud.comprobante_pago }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Método de pago:</span>
+                    <span class="info-value">{{ solicitud.metodo_pago or 'No especificado' }}</span>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="action-buttons">
+            {% if solicitud.estado == 'pendiente_pago' %}
+            <a href="/solicitud/paso5" class="btn btn-success">Pagar ahora</a>
+            {% endif %}
+            
+            {% if solicitud.estado == 'licencia_emitida' %}
+            <a href="/solicitud/licencia/{{ solicitud.id }}/descargar" class="btn btn-primary">Descargar licencia</a>
+            {% endif %}
+            
+            <a href="/portal/dashboard" class="btn btn-outline">Volver al dashboard</a>
+        </div>
+    </main>
+</body>
+</html>

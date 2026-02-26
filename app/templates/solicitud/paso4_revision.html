@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="es-PE">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paso 4 de 6 - Revisión de Datos - Municipalidad de Ica</title>
+    <style>
+        :root {
+            --primary: #0B3B5C;
+            --primary-light: #1E4F72;
+            --secondary: #8B1E3F;
+            --accent: #C49A6C;
+            --dark: #1C2B3A;
+            --gray-dark: #4A5568;
+            --gray: #718096;
+            --gray-light: #E2E8F0;
+            --light: #F7FAFC;
+            --white: #FFFFFF;
+            --shadow: 0 4px 20px rgba(0,0,0,0.05);
+            --border-radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--light);
+            color: var(--dark);
+        }
+
+        .header {
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .header-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 16px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .logo-text {
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .logo-text span {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        .user-name {
+            font-weight: 500;
+            color: var(--gray-dark);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 40px auto;
+            padding: 0 40px;
+        }
+
+        .progress-container {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .step {
+            text-align: center;
+            z-index: 2;
+            background: var(--white);
+            padding: 0 10px;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--gray-light);
+            color: var(--gray);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 8px;
+            font-weight: 600;
+        }
+
+        .step.completed .step-number {
+            background: #047857;
+            color: white;
+        }
+
+        .step.active .step-number {
+            background: var(--primary);
+            color: white;
+        }
+
+        .step-label {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        .progress-bar {
+            height: 2px;
+            background: var(--gray-light);
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            z-index: 1;
+        }
+
+        .progress-fill {
+            height: 2px;
+            background: var(--primary);
+            width: 66.66%;
+            transition: width 0.3s;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 500;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: var(--gray);
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .alert {
+            background: #FEF3C7;
+            border-left: 4px solid #D97706;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+            color: #92400E;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-title h3 {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .btn-edit {
+            padding: 6px 16px;
+            border: 1px solid var(--primary);
+            border-radius: 40px;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .btn-edit:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .info-row {
+            margin-bottom: 15px;
+        }
+
+        .info-label {
+            color: var(--gray);
+            font-size: 0.85rem;
+            margin-bottom: 4px;
+        }
+
+        .info-value {
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .amount-box {
+            background: var(--primary);
+            color: white;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            margin: 30px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .amount-label {
+            font-size: 1.2rem;
+        }
+
+        .amount-value {
+            font-size: 2.5rem;
+            font-weight: 600;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-light);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--gray-light);
+            color: var(--gray-dark);
+            margin-top: 15px;
+            display: block;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+            
+            .card {
+                padding: 30px 20px;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .amount-box {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">MPI</div>
+                <div class="logo-text">
+                    Municipalidad de Ica
+                    <span>Nueva Solicitud</span>
+                </div>
+            </div>
+            <div class="user-name">{{ user.nombre }}</div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="progress-container">
+            <div class="steps">
+                <div class="step completed">
+                    <div class="step-number">✓</div>
+                    <div class="step-label">Clasificación</div>
+                </div>
+                <div class="step completed">
+                    <div class="step-number">✓</div>
+                    <div class="step-label">Documentos</div>
+                </div>
+                <div class="step completed">
+                    <div class="step-number">✓</div>
+                    <div class="step-label">Zonificación</div>
+                </div>
+                <div class="step active">
+                    <div class="step-number">4</div>
+                    <div class="step-label">Revisión</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-label">Pago</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">6</div>
+                    <div class="step-label">Confirmación</div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h1>Paso 4: Revisión de datos</h1>
+            <p class="subtitle">Verifique que toda la información sea correcta antes de continuar al pago.</p>
+
+            {% if data.requiere_itse_previa %}
+            <div class="alert">
+                <strong>⚠️ Importante:</strong> Por el nivel de riesgo de su negocio ({{ data.nivel_riesgo|upper }}), 
+                debe obtener el Certificado ITSE antes de que se emita la licencia.
+            </div>
+            {% endif %}
+
+            <form action="/solicitud/paso4" method="post">
+                <input type="hidden" name="session_id" value="{{ session_id }}">
+
+                <div class="section">
+                    <div class="section-title">
+                        <h3>1. Rubro y clasificación</h3>
+                        <a href="/solicitud/paso1" class="btn-edit">Editar</a>
+                    </div>
+                    <div class="info-grid">
+                        <div class="info-row">
+                            <div class="info-label">Rubro seleccionado</div>
+                            <div class="info-value">{{ data.rubro_nombre }}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Nivel de riesgo</div>
+                            <div class="info-value">{{ data.nivel_riesgo|upper }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">
+                        <h3>2. Datos del negocio</h3>
+                        <a href="/solicitud/paso2" class="btn-edit">Editar</a>
+                    </div>
+                    <div class="info-grid">
+                        <div class="info-row">
+                            <div class="info-label">Nombre del negocio</div>
+                            <div class="info-value">{{ data.nombre_negocio }}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Dirección</div>
+                            <div class="info-value">{{ data.direccion_negocio }}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Distrito</div>
+                            <div class="info-value">{{ data.distrito }}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Área del local</div>
+                            <div class="info-value">{{ data.area_local }} m²</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">
+                        <h3>3. Zonificación</h3>
+                        <a href="/solicitud/paso3" class="btn-edit">Editar</a>
+                    </div>
+                    <div class="info-grid">
+                        <div class="info-row">
+                            <div class="info-label">Estado</div>
+                            <div class="info-value">
+                                {% if data.evaluacion_zonificacion.compatible %}
+                                ✅ Compatible
+                                {% else %}
+                                ⚠️ Con observaciones
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Zona asignada</div>
+                            <div class="info-value">{{ data.evaluacion_zonificacion.zona }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="amount-box">
+                    <span class="amount-label">Total a pagar:</span>
+                    <span class="amount-value">S/ {{ "%.2f"|format(data.monto) }}</span>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Confirmar y continuar al pago
+                </button>
+
+                <a href="/solicitud/paso3" class="btn btn-secondary">
+                    ← Volver al paso 3
+                </a>
+            </form>
+        </div>
+    </main>
+</body>
+</html>
