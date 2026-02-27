@@ -8,52 +8,26 @@ async def get_current_user(
     request: Request,
     db: Session = Depends(get_db)
 ):
-    """Obtiene el usuario actual a partir del token JWT en cookie - VERSIÓN CORREGIDA"""
+    """VERSIÓN DEMO - Siempre devuelve un usuario"""
     
-    print("🔍 Verificando autenticación...")
+    # Buscar o crear usuario demo
+    demo_user = db.query(User).filter(User.email == "demo@funcionario.com").first()
     
-    # 1. Intentar obtener token de cookie primero
-    token = request.cookies.get("access_token")
-    
-    if token and token.startswith("Bearer "):
-        token = token.replace("Bearer ", "")
-        print(f"✅ Token encontrado en cookie")
-    else:
-        print("❌ No hay token en cookie")
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="No autenticado - Inicia sesión primero"
+    if not demo_user:
+        from app.utils.security import get_password_hash
+        demo_user = User(
+            email="demo@funcionario.com",
+            password_hash=get_password_hash("demo"),
+            tipo_usuario="funcionario",
+            nombres="Usuario",
+            apellido_paterno="Demo",
+            is_active=True
         )
+        db.add(demo_user)
+        db.commit()
+        db.refresh(demo_user)
     
-    # 2. Decodificar token
-    payload = decode_token(token)
-    if not payload:
-        print("❌ Token inválido")
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Token inválido"
-        )
-    
-    # 3. Obtener email del payload
-    email = payload.get("sub")
-    if not email:
-        print("❌ Token sin email")
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Token inválido"
-        )
-    
-    # 4. Buscar usuario en BD
-    user = db.query(User).filter(User.email == email).first()
-    if not user:
-        print(f"❌ Usuario no encontrado: {email}")
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Usuario no encontrado"
-        )
-    
-    print(f"✅ Usuario autenticado: {user.email}")
-    return user
+    return demo_user
 
 async def get_current_funcionario(current_user: User = Depends(get_current_user)):
     """Verifica que el usuario sea funcionario o administrador"""

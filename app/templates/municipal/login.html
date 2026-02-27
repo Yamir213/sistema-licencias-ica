@@ -9,6 +9,7 @@
             --primary: #0B3B5C;
             --primary-light: #1E4F72;
             --secondary: #8B1E3F;
+            --success: #047857;
             --dark: #1C2B3A;
             --gray-dark: #4A5568;
             --gray: #718096;
@@ -90,6 +91,18 @@
             margin-bottom: 20px;
         }
 
+        .badge-demo {
+            background: var(--success);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
         h1 {
             font-size: 1.8rem;
             font-weight: 500;
@@ -150,6 +163,27 @@
             background: var(--primary-light);
         }
 
+        .btn-demo {
+            width: 100%;
+            padding: 16px;
+            background: var(--success);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .btn-demo:hover {
+            background: #065F46;
+        }
+
         .error {
             background: #FEF2F2;
             color: #991B1B;
@@ -158,6 +192,19 @@
             margin-bottom: 20px;
             font-size: 0.9rem;
             border-left: 4px solid #DC2626;
+        }
+
+        .demo-info {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid var(--gray-light);
+            text-align: center;
+        }
+
+        .demo-info p {
+            color: var(--gray);
+            font-size: 0.85rem;
+            margin-bottom: 10px;
         }
 
         .back-link {
@@ -213,6 +260,26 @@
                     Acceder al sistema
                 </button>
             </form>
+            <!-- Después del formulario -->
+<div style="text-align: center; margin-top: 20px; padding: 15px; background: #e3f2fd; border-radius: var(--border-radius);">
+    <p style="color: #1976d2; margin-bottom: 5px;">🎯 Modo Demostración</p>
+    <p style="color: #666; font-size: 0.9rem;">
+        Usa cualquier email que termine en <strong>@funcionario.com</strong><br>
+        Ej: <strong>cualquier@funcionario.com</strong> / contraseña cualquiera
+    </p>
+</div>
+
+            <!-- 👇 SECCIÓN DE DEMO AGREGADA -->
+            <div class="demo-info">
+                <span class="badge-demo">🎯 MODO DEMOSTRACIÓN</span>
+                <p>¿Solo quieres probar el sistema? Usa el acceso rápido:</p>
+                <a href="/municipal/demo-login" class="btn-demo">
+                    🚀 Acceder como Funcionario de Prueba
+                </a>
+                <p style="margin-top: 10px; font-size: 0.8rem; color: var(--gray-light);">
+                    (No necesitas credenciales, acceso instantáneo)
+                </p>
+            </div>
         </div>
 
         <a href="/" class="back-link">← Volver al portal ciudadano</a>
