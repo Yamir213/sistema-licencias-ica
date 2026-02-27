@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from datetime import datetime, timedelta
 import uuid
 import json
-
+from app.utils.security import create_access_token, get_password_hash
 from app.database.connection import get_db
 from app.utils.dependencies import get_current_funcionario
 from app.models.user import User
@@ -888,3 +888,71 @@ async def crear_zona(
     db.commit()
     
     return RedirectResponse(url="/municipal/configuracion", status_code=302)
+# ============ DEMO - ACCESO RÁPIDO ============
+
+@router.get("/demo-login")
+async def demo_login(
+    request: Request,
+    db: Session = Depends(get_db)
+):
+    """Login automático para demostración"""
+    
+    try:
+        print("🎯 Acceso rápido de demostración")
+        
+        # Buscar si ya existe el usuario demo
+        demo_user = db.query(User).filter(User.email == "demo@funcionario.com").first()
+        
+        # Si no existe, crearlo
+        if not demo_user:
+            print("👤 Creando usuario de demostración...")
+            demo_user = User(
+                email="demo@funcionario.com",
+                password_hash=get_password_hash("demo123"),
+                telefono="999888777",
+                tipo_usuario="funcionario",
+                tipo_persona="natural",
+                nombres="Usuario",
+                apellido_paterno="Demostración",
+                dni="12345678",
+                direccion="Palacio Municipal",
+                distrito="Ica",
+                cargo="Administrador Demo",
+                area="Desarrollo Económico",
+                is_active=True,
+                is_verified=True,
+                created_at=datetime.now()
+            )
+            db.add(demo_user)
+            db.commit()
+            db.refresh(demo_user)
+            print("✅ Usuario demo creado")
+        else:
+            print("✅ Usuario demo ya existía")
+        
+        # Crear token de acceso
+        access_token = create_access_token({
+            "sub": demo_user.email,
+            "user_id": demo_user.id,
+            "tipo": demo_user.tipo_usuario
+        })
+        
+        print(f"🔑 Token generado para: {demo_user.email}")
+        
+        # Redirigir al dashboard
+        response = RedirectResponse(url="/municipal/dashboard", status_code=302)
+        response.set_cookie(
+            key="access_token",
+            value=f"Bearer {access_token}",
+            httponly=True,
+            path="/",
+            max_age=86400
+        )
+        
+        return response
+        
+    except Exception as e:
+        print(f"❌ Error en demo-login: {e}")
+        import traceback
+        traceback.print_exc()
+        return RedirectResponse(url="/municipal/login", status_code=302)
